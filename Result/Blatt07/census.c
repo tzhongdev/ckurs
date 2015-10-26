@@ -28,15 +28,18 @@ int main(int argc, char **argv) {
 
     // Hier implementieren
 
+    // char pointer pointer; pointer das aus ein array zeigt; dieses array hat an indizes wieder pointer (zeigen auf char array = string!);
     char **result;
-    int j = 0;
+    int j = 0;              // var j als separater laufindex für result; damit werte an richtige stelle gelegt werden
 
+    // dynamische speicheralloz. für unsere pointer an den indizes -> noch kein speicher für die länge der char arrays
     result = malloc(sizeof(char*) * len);
 
+    // Algo. gehe durch array und wenn kriterien zutreffen; alloz. speicher für 100 chars dynamisch; lege neuen string an stelle j
     for (int i = 0; i < len; ++i)
     {
 
-        if (bewohner[i] >= anzahl * 1000 && strcmp(laender[i], bundesland) == 0)
+        if (bewohner[i] >= anzahl && strcmp(laender[i], bundesland) == 0)
         {
             result[j] = malloc(100);
             sprintf(result[j], "Die Stadt %s hat %d Einwohner.", staedte[i], bewohner[i]);
@@ -44,10 +47,14 @@ int main(int argc, char **argv) {
         }
     }
     write_file(result, j);
+
+    // da speicher für jede zeile separat alloz. wurde, muss jede zeile auch separat gefreet werden
     for (int i = 0; i < j; ++i)
     {
         free(result[i]);
     }
+
+    // letztendlich muss noch spciher der char* gefreet werden
     free(result);
 }
 
